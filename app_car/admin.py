@@ -31,7 +31,7 @@ def increase_price(modeladmin,request,queryset):
     all_price = list(queryset.values_list('price'))
     all_cars = queryset.all()
     numbers = queryset.count()
-    new_price = [(i[0]*1.2) for i in all_price]
+    new_price = list(map(lambda x: x[0]*1.2, all_price))
     for i in range(len(new_price)):
         my_car = all_cars[i]
         my_car.price = new_price[i]

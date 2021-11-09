@@ -20,7 +20,7 @@ class Car(models.Model):
     image = models.ImageField(verbose_name="تصویر خودرو", upload_to =path_car, validators=[validat_image])
 
     def save(self,*args,**kwrags):
-        self.slug = slugify(self.title, allow_unicode=True)
+        self.slug = slugify(self.name, allow_unicode=True)
         super().save(*args,**kwrags)
     
     def get_date(self):
