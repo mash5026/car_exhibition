@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block title %} MyCars {% endblock title %} {% block content %} {% for car in cars%}
+
+<div class="card d-inline-block mb-5" style="width: 22rem;">
+    <img src="{{car.image.url}}" class="card-img-top" alt="{{car.name}}" width="150" height="200">
+    <div class="card-body">
+        <h5 class="card-title">{{car.name}}</h5>
+        <p class="card-text">{{car.agency}}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">سال تولید: {{car.year}}</li>
+        <li class="list-group-item">قیمت :{{car.price}}</li>
+        <li class="list-group-item">ثبت :{{car.get_date}}</li>
+    </ul>
+    <div class="card-body">
+        <a href="#" class="btn btn-info">توضیحات بیشتر</a>
+        <a href="#" class="btn btn-success">دریافت لینک</a>
+    </div>
+</div>
+{% endfor %} {% endblock content%}

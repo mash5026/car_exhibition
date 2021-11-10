@@ -1,3 +1,4 @@
+from re import T
 from django.db import models
 from .utils import path_car,LIST_STATUS,OFFICIAL, validat_image
 from django.utils.text import slugify
@@ -18,13 +19,14 @@ class Car(models.Model):
     price = models.PositiveBigIntegerField(verbose_name="قیمت", null=True)
     stock = models.BooleanField(verbose_name="موجود", default=True ,help_text="در صورت موجود بودن علامت کنار آن قابل مشاهده است")
     image = models.ImageField(verbose_name="تصویر خودرو", upload_to =path_car, validators=[validat_image])
+    descript = models.TextField(verbose_name="توضیحات",null=True, blank=True)
 
     def save(self,*args,**kwrags):
         self.slug = slugify(self.name, allow_unicode=True)
         super().save(*args,**kwrags)
     
     def get_date(self):
-        return self.created_at.strftime('در ساعت %H:%m و در تاریخ %Y/%m/%d')
+        return self.created_at.strftime('%H:%m -- %Y/%m/%d')
     get_date.short_description="تاریخ ثبت"
 
     def get_image(self):
