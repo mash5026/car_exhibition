@@ -4,11 +4,13 @@ from .utils import path_car,LIST_STATUS,OFFICIAL, validat_image
 from django.utils.text import slugify
 from django_jalali.db import models as jmodels
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 class Car(models.Model):
     slug = models.SlugField(verbose_name="پیوند یکتا", null=True, blank=True, allow_unicode=True)
+    code = models.PositiveSmallIntegerField(verbose_name="کد خودرو", null=True, unique=True, blank=True)
     name = models.CharField(max_length=30, verbose_name="نام خودرو", null=True)
     company = models.ForeignKey("Company", verbose_name="نام برند", on_delete=models.SET_NULL, null=True, blank=True,\
     related_name='cars')
@@ -23,6 +25,7 @@ class Car(models.Model):
 
     def save(self,*args,**kwrags):
         self.slug = slugify(self.name, allow_unicode=True)
+        self.code = self.id
         super().save(*args,**kwrags)
     
     def get_date(self):
@@ -42,6 +45,10 @@ class Car(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("app_car:", kwargs={"pk": self.pk})
+    
 
 
 class Company(models.Model):

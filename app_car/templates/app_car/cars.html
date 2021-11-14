@@ -1,19 +1,39 @@
-{% extends 'base.html' %} {% block title %} MyCars {% endblock title %} {% block content %} {% for car in cars%}
-
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %} MyCars {% endblock title %}
+{% block content %}
+<a href={% url 'app_car:random' %} type="button" class="btn btn-primary btn-lg btn-block my-2">انتخاب تصادفی ماشین</a>
+{% for car in cars%}
 <div class="card d-inline-block mb-5" style="width: 22rem;">
     <img src="{{car.image.url}}" class="card-img-top" alt="{{car.name}}" width="150" height="200">
     <div class="card-body">
-        <h5 class="card-title">{{car.name}}</h5>
-        <p class="card-text">{{car.agency}}</p>
+        {% if forloop.last %}
+            <h5 class="card-title text-danger">مدل{{car.year}}-{{car.name}}</h5>
+        {% elif forloop.counter == 3 %}
+            <h5 class="card-title text-success">مدل{{car.year}}-{{car.name}}</h5>
+        {% else %}
+            <h5 class="card-title">مدل{{car.year}}-{{car.name}}</h5>
+        {% endif %}
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">سال تولید: {{car.year}}</li>
-        <li class="list-group-item">قیمت :{{car.price}}</li>
+        <!-- <li class="list-group-item">سال تولید: {{car.year}}</li> -->
+        <li class="list-group-item">قیمت :{{car.price|intword}} ریال</li>
         <li class="list-group-item">ثبت :{{car.get_date}}</li>
     </ul>
     <div class="card-body">
-        <a href="#" class="btn btn-info">توضیحات بیشتر</a>
-        <a href="#" class="btn btn-success">دریافت لینک</a>
+        {% if car.stock %}
+        <a href="{% url 'app_car:details_id' car.id %}" class="btn btn-info">توضیحات بیشتر</a>
+        <a href="#" class="btn btn-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
+                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+              </svg></a>
+        {% else %}
+        <a href="#" class="btn btn-light disabled">موجود نمی باشد</a>
+        <a href="#" class="btn btn-light">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
+                <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+              </svg></a>
+        {% endif %}
     </div>
 </div>
 {% endfor %} {% endblock content%}

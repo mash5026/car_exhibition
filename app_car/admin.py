@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Car, Company,Agency
 from django.contrib import messages
 from django.db import models
+from django.db.models import F
 
 
 # Register your models here.
@@ -28,15 +29,16 @@ def make_available_car(modeladmin,request,queryset):
 
 @admin.action(description="افزایش قیمت به میزان 20درصد")
 def increase_price(modeladmin,request,queryset):
-    all_price = list(queryset.values_list('price'))
-    all_cars = queryset.all()
-    numbers = queryset.count()
-    new_price = list(map(lambda x: x[0]*1.2, all_price))
-    for i in range(len(new_price)):
-        my_car = all_cars[i]
-        my_car.price = new_price[i]
-        my_car.save()
-    messages.success(request, f"{numbers} قیمت به روز رسانی گردید.")
+    # all_price = list(queryset.values_list('price'))
+    # all_cars = queryset.all()
+    # numbers = queryset.count()
+    # new_price = list(map(lambda x: x[0]*1.2, all_price))
+    # for i in range(len(new_price)):
+    #     my_car = all_cars[i]
+    #     my_car.price = new_price[i]
+    #     my_car.save()
+    new_price = queryset.update(price=F('price')+F('price')*0.2)
+    messages.success(request, f"{new_price} قیمت به روز رسانی گردید.")
 
 
 @admin.register(Car)
