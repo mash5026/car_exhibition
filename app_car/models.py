@@ -5,6 +5,7 @@ from django.utils.text import slugify
 from django_jalali.db import models as jmodels
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 
@@ -47,7 +48,7 @@ class Car(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("app_car:", kwargs={"pk": self.pk})
+        return reverse("app_car:details", kwargs={"slug": self.slug})
     
 
 

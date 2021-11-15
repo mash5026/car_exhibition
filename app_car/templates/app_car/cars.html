@@ -4,7 +4,7 @@
 {% block content %}
 <a href={% url 'app_car:random' %} type="button" class="btn btn-primary btn-lg btn-block my-2">انتخاب تصادفی ماشین</a>
 {% for car in cars%}
-<div class="card d-inline-block mb-5" style="width: 22rem;">
+<div class="card d-inline-block mb-3" style="width: 22.92rem;">
     <img src="{{car.image.url}}" class="card-img-top" alt="{{car.name}}" width="150" height="200">
     <div class="card-body">
         {% if forloop.last %}
@@ -23,7 +23,7 @@
     <div class="card-body">
         {% if car.stock %}
         <a href="{% url 'app_car:details_id' car.id %}" class="btn btn-info">توضیحات بیشتر</a>
-        <a href="#" class="btn btn-success">
+        <a href="https://web.whatsapp.com/send?text={{ request.build_absolute_uri }}{% url 'app_car:details' car.slug %}" data-action="share/whatsapp/share" target="_blank" class="btn btn-success">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16">
                 <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
               </svg></a>
