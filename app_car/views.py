@@ -9,16 +9,27 @@ from django.db.models import Count
 
 def home(request):
     search = False
-    if request.method=="GET":
+    if request.is_ajax():
         search = True
-        value_search = request.GET.get('search', None)
+        value_search = request.GET.get('search_text', None)
         if value_search:
             cars = Car.objects.filter(name__contains=value_search)
             context = {
                 'cars':cars,
                 'search':search,
             }
-            return render(request, 'app_car/home.html', context)
+            return render(request, 'app_car/search_results.html', context)
+    if request.method =="GET":
+            search =True
+            value_search = request.GET.get('search', None)
+            if value_search:
+                cars = Car.objects.filter(name__contains=value_search)
+                context={
+                    'cars':cars,
+                    'search':search,
+                }
+                return render(request, 'app_car/home.html', context)
+
     return render(request,'app_car/home.html')
 
 #-------------- get all cars --------------#
