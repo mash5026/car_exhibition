@@ -9,4 +9,6 @@ urlpatterns = [
     path('details/<str:slug>/', views.details, name="details"),
     path('details_id/<int:id>/', views.details_id, name="details_id"),
     path('random-cars/', views.random_cars, name="random"),
+    path('add_car/', views.add_car, name='AddCar'),
+    path('edit/<str:slug>/', views.edit_car, name='EditCar'),
 ]

@@ -8,10 +8,10 @@
   <div class="card-body d-flex">
     <h5 class="card-title">قیمت :{{car.price|intword}} ریال</h5>
     <a href="{{car.get_absolute_url}}" class="btn btn-success">جزِئیات بیشتر</a>
-    <a href="/" class="btn btn-primary mr-3"> پاک کردن نتیجه جستجو </a>
   </div>
 </div>
 {% endfor %}
+<a href="/" class="btn btn-primary"> پاک کردن نتیجه جستجو </a>
 {% elif request.GET.search or search %}
   <div class="card-header d-flex">
     متاسفانه این ماشین وجود ندارد

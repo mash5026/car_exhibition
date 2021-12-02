@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,8 +37,11 @@ INSTALLED_APPS = [
     'django_jalali',
     'admin_interface',
     'colorfield',
+    'ckeditor',
+    'crispy_forms',
     #my_app
     'app_car',
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -120,6 +125,10 @@ USE_L10N = True
 
 USE_TZ = False
 
+LANGUAGES = (
+    ('fa', _('persian')),
+    ('en',_('english')),
+)
 
 
 # Static files (CSS, JavaScript, Images)
@@ -140,3 +149,24 @@ MEDIA_ROOT = BASE_DIR/'media'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MESSAGE_TAGS = {
+    messages.SUCCESS: 'alert alert-success',
+    messages.DEBUG: 'alert alert-danger',
+    messages.ERROR: 'alert alert-danger',
+    messages.INFO: 'alert alert-info',
+    messages.WARNING: 'alert alert-warning',
+}
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'accounts:login'
+LOGOUT_REDIRECT_URL = '/'
+
+CKEDITOR_UPLOAD_PATH = "ckeditor/uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+
+    },
+}

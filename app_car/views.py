@@ -1,8 +1,11 @@
+import re
 from django.http.response import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import Car, Company, Agency
 import random
 from django.db.models import Count
+from .forms import CarForm,EditCarForm
+from django.contrib import messages
 
 # Create your views here.
 
@@ -68,3 +71,28 @@ def random_cars(request):
         "my_car":my_car
     }
     return render(request, 'app_car/random_cars.html', context)
+
+def add_car(request):
+    template_name = 'app_car/add_car.html'
+    form = CarForm(request.POST or None, request.FILES or None)
+    if request.method=='POST':
+        if form.is_valid():
+            form.save()
+            messages.success(request,'ماشین جدید با موفقیت اضافه گردید')
+            return redirect('app_car:home')
+    else:
+        context={'form':form}
+    return render(request, template_name,context)
+
+def edit_car(request, slug):
+    template_name = 'app_car/edit_car.html'
+    car = get_object_or_404(Car, slug=slug)
+    form = EditCarForm(request.POST or None, request.FILES or None, instance=car)
+    if request.method=='POST':
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'ماشین مورد نظر اصلاح گردید')
+            return redirect('app_car:home')
+    else:
+        context={'form':form}
+    return render(request,template_name, context )

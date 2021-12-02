@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% block title %} Add Car {% endblock title %}
+{% block content %}
+<form class="login100-form validate-form" method="POST" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{form|crispy}}
+</from>
+{% endblock content %}

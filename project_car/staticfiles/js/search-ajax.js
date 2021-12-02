@@ -14,4 +14,5 @@ $(function() {
 
 function SearchSucces(data, textStatus, jqXHR) {
     $("#self_result").html(data)
+    console.log(data)
 }
